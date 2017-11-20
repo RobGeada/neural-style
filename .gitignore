@@ -1,6 +1,2 @@
-*.mat
-env/
-.idea
-__pycache__
-*.pyc
-*.jpg
+**/.DS_Store
+**/.editorconfig
