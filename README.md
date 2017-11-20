@@ -5,7 +5,7 @@ This is a modified version of Anish Athalye's implementation of [neural-style](h
 
 
 ## License
-The original code upon which this is based is licensed and copyright, the details of which have been provided below.
+The original code upon which this is based is copyright, the details of which have been provided below.
 
 Copyright (c) 2015-2017 Anish Athalye. Released under GPLv3. See
 [LICENSE.txt][LICENSE.txt] for details.
