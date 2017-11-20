@@ -5,6 +5,7 @@ import vgg
 import tensorflow as tf
 import numpy as np
 
+import os
 from sys import stderr
 
 from PIL import Image
@@ -143,6 +144,18 @@ def stylize(network, initial, initial_noiseblend, content, styles, preserve_colo
             stderr.write('Optimization started...\n')
             if (print_iterations and print_iterations != 0):
                 print_progress()
+
+            pretrained = False
+            print os.listdir(str(os.getcwd()))
+            if "fns.ckpt" in os.listdir(str(os.getcwd())):
+                print("Evaluating pre-trained model")
+                pretrained = True
+                saver = tf.train.Saver()
+                ckpt = tf.train.get_checkpoint_state(os.getcwd())
+
+                saver.restore(sess, ckpt.model_checkpoint_path)
+                iterations = 1;
+
             for i in range(iterations):
                 stderr.write('Iteration %4d/%4d\n' % (i + 1, iterations))
                 train_step.run()
@@ -189,6 +202,9 @@ def stylize(network, initial, initial_noiseblend, content, styles, preserve_colo
 
                         # 5
                         img_out = np.array(Image.fromarray(combined_yuv, 'YCbCr').convert('RGB'))
+                    if not pretrained:
+                        saver = tf.train.Saver(write_version=tf.train.SaverDef.V1)
+                        res = saver.save(sess, os.getcwd()+"/fns.ckpt")
 
 
                     yield (
